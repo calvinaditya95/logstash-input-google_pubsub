@@ -253,7 +253,6 @@ class LogStash::Inputs::GooglePubSub < LogStash::Inputs::Base
     handler = MessageReceiver.new do |message|
       # handle incoming message, then ack/nack the received message
       algorithm = message.getAttributesMap()["compression_algorithm"]
-      @logger.info(algorithm) if algorithm != nil
 
       case algorithm
       when nil
