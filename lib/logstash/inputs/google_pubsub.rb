@@ -218,8 +218,9 @@ class LogStash::Inputs::GooglePubSub < LogStash::Inputs::Base
   # If undefined, Logstash will complain, even if codec is unused.
   default :codec, "plain"
 
-  COMPRESSION_ALGORITHM_ZLIB = "zlib"
   BATCHED_RECORD_SEPARATOR = 30.chr
+  BUFFER_SIZE_BYTES = 16384
+  COMPRESSION_ALGORITHM_ZLIB = "zlib"
 
   public
   def register
@@ -274,7 +275,7 @@ class LogStash::Inputs::GooglePubSub < LogStash::Inputs::Base
           iis = java.util.zip.InflaterInputStream.new(bais)
 
           result = ""
-          buf = Java::byte[5].new
+          buf = Java::byte[BUFFER_SIZE_BYTES].new
           rlen = -1
 
           while (rlen = iis.read(buf)) != -1 do
