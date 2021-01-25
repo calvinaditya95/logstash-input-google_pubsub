@@ -275,7 +275,7 @@ class LogStash::Inputs::GooglePubSub < LogStash::Inputs::Base
           iis = java.util.zip.InflaterInputStream.new(bais)
 
           result = ""
-          buf = Java::byte[BUFFER_SIZE].new
+          buf = Java::byte[BUFFER_SIZE_BYTES].new
           rlen = -1
 
           while (rlen = iis.read(buf)) != -1 do
