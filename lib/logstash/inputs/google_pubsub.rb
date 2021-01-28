@@ -166,7 +166,7 @@ class LogStash::Inputs::GooglePubSub < LogStash::Inputs::Base
     def receiveMessage(message, consumer)
       @block.call(message)
       consumer.ack()
-    rescue java.util.zip.DataFormatException, java.util.zip.ZipException => e
+    rescue ArgumentError, java.util.zip.DataFormatException, java.util.zip.ZipException => e
       consumer.ack()
     end
   end
@@ -295,6 +295,9 @@ class LogStash::Inputs::GooglePubSub < LogStash::Inputs::Base
           @logger.error(e.backtrace.join("\n"))
           raise
         end
+      else
+        @logger.error("unknown compression algorithm: '#{algorithm}'")
+        raise ArgumentError, "unknown compression algorithm: '#{algorithm}'"
       end
     end
     listener = SubscriberListener.new do |from, failure|
