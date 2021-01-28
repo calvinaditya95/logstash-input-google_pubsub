@@ -296,6 +296,7 @@ class LogStash::Inputs::GooglePubSub < LogStash::Inputs::Base
           raise
         end
       else
+        @logger.error("unknown compression algorithm: '#{algorithm}'")
         raise ArgumentError, "unknown compression algorithm: '#{algorithm}'"
       end
     end
