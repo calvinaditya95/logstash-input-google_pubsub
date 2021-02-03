@@ -215,11 +215,13 @@ class LogStash::Inputs::GooglePubSub < LogStash::Inputs::Base
   # recommended for most use-cases.
   config :create_subscription, :validate => :boolean, :required => false, :default => false
 
+  # Buffer size (bytes) used during decompression of compressed batches
+  config :inflate_buffer_size, :validate => :number, :required => false, :default => 65536
+
   # If undefined, Logstash will complain, even if codec is unused.
   default :codec, "plain"
 
   BATCHED_RECORD_SEPARATOR = 30.chr
-  BUFFER_SIZE_BYTES = 65536
   COMPRESSION_ALGORITHM_ZLIB = "zlib"
 
   public
@@ -275,7 +277,7 @@ class LogStash::Inputs::GooglePubSub < LogStash::Inputs::Base
           iis = java.util.zip.InflaterInputStream.new(bais)
 
           result = ""
-          buf = Java::byte[BUFFER_SIZE_BYTES].new
+          buf = Java::byte[@inflate_buffer_size].new
           rlen = -1
 
           while (rlen = iis.read(buf)) != -1 do
