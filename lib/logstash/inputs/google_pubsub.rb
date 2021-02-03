@@ -219,7 +219,7 @@ class LogStash::Inputs::GooglePubSub < LogStash::Inputs::Base
   default :codec, "plain"
 
   BATCHED_RECORD_SEPARATOR = 30.chr
-  BUFFER_SIZE_BYTES = 16384
+  BUFFER_SIZE_BYTES = 65536
   COMPRESSION_ALGORITHM_ZLIB = "zlib"
 
   public
