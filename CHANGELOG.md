@@ -1,3 +1,6 @@
+## 1.3.4
+ - Buffer size is now configurable using `inflate_buffer_size` parameter
+
 ## 1.3.0
  - Added support for reading zlib compressed batch
 
